@@ -1,0 +1,20 @@
+Metrics/LineLength:
+  Max: 120
+
+Style/Encoding:
+  Enabled: false
+
+Style/FileName:
+  Enabled: false
+
+Style/HashSyntax:
+  Enabled: false
+
+Style/NumericLiterals:
+  MinDigits: 6
+
+Style/SingleSpaceBeforeFirstArg:
+  Enabled: false
+
+Style/WordArray:
+  MinSize: 5

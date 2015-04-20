@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+RUBY_VERSION=<%= @version %>
+RUBY_SRC_URL=<%= @source_url %>
+INSTALL_PREFIX=<%= @install_prefix %>
+BUILD_DIR=<%= @build_dir %>
+
+# Install Ruby
+cd ${BUILD_DIR}
+
+echo "Downloading Ruby source to ${BUILD_DIR}"
+wget ${RUBY_SRC_URL}/ruby-${RUBY_VERSION}.tar.gz
+tar -xvzf ruby-${RUBY_VERSION}.tar.gz
+
+echo "Compiling Ruby from source -- version ${RUBY_VERSION}"
+cd ruby-${RUBY_VERSION}/ && \
+./configure --prefix=${INSTALL_PREFIX} --with-readline-dir=/usr/lib/x86_64-linux-gnu/libreadline.so && \
+make && make install
