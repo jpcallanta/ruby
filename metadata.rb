@@ -1,5 +1,5 @@
 name             'ruby'
-maintainer       'Gotpwnd'
+maintainer       'GOTPWND'
 maintainer_email 'jp@callanta.net'
 license          'MIT'
 description      'Installs/Configures ruby'

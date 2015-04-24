@@ -1,4 +1,4 @@
-actions :install, :remove
+actions :install
 
 attribute :version, :kind_of => String
 attribute :source_url, :kind_of => String

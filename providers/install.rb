@@ -1,6 +1,8 @@
 use_inline_resources
 
 action :install do
+  build_path = "#{new_resource.build_dir}/ruby-#{new_resource.version}"
+
   # Install ruby dependecy packages needed to build ruby source.
   dep_packages = [
     'build-essential',
@@ -45,7 +47,7 @@ action :install do
       :build_dir => new_resource.build_dir
 
     )
-    only_if { !::File.exist? '/usr/local/bin/ruby_install.sh' }
+    only_if { !::File.exist? "#{new_resource.install_prefix}/bin/ruby" }
     notifies :run, 'execute[ruby_install]', :immediately
   end
 
@@ -53,8 +55,25 @@ action :install do
   execute 'ruby_install' do
     command '/usr/local/bin/ruby_install.sh'
     action :nothing
+    notifies :delete, 'file[remove_buildscript]', :immediately
   end
-end
 
-action :remove do
+  # Cleanup
+  file 'remove_buildscript' do
+    path '/usr/local/bin/ruby_install.sh'
+    action :nothing
+    notifies :delete, 'directory[source_dir]', :immediately
+  end
+
+  directory 'source_dir' do
+    path build_path
+    recursive true
+    action :nothing
+    notifies :delete, 'file[ruby_tarball]', :immediately
+  end
+
+  file 'ruby_tarball' do
+    path "/tmp/ruby-#{new_resource.version}.tar.gz"
+    action :nothing
+  end
 end
